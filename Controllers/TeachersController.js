@@ -11,6 +11,11 @@ module.exports.getAllTeacher = (request, response) => {
 
 // to show specific  Teacher
 module.exports.getTeacherByID = (request, response) => {
+    let result = validationResult(request);
+    if (!result.isEmpty()) {
+        let errorMessages = result.array().reduce((sum, error) => sum + error.msg + " ", "")
+        throw new Error(errorMessages);
+    }
     response.status(200).json({ message: "get Specific Teacher by id", data: request.params });
 }
 

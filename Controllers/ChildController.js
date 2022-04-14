@@ -11,6 +11,11 @@ module.exports.getAllChild = (request, response) => {
 
 // to show specific child
 module.exports.getChildByID = (request, response) => {
+    let result = validationResult(request);
+    if (!result.isEmpty()) {
+        let errorMessages = result.array().reduce((sum, error) => sum + error.msg + " ", "")
+        throw new Error(errorMessages);
+    }
     response.status(200).json({ message: "get Specific child by id ", data: request.params });
 }
 

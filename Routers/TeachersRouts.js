@@ -9,33 +9,25 @@ const controller = require("./../Controllers/TeachersController");
 
 //ask eng.eman about that .. ?
 router.get("/teachers", controller.getAllTeacher)
+router.post("/teachers", createValidation("teacher"), controller.createTeacher)
 
 router.route("/teachers/:id")
-    .get(controller.getTeacherByID)
-    .post(
-        [
-            // _id(objectID), fullname, password, email, image(which is string)
-            // body("id").isObject().withMessage("teacher ID must be Integer"),
-            body("id").isInt().withMessage("teacher ID must be Integer"),
-            body("fullName").isAlpha().withMessage("teacher name must be string").isLength({ min: 3, max: 20 }).withMessage("teacher 3 < name > 20 length"),
-            body("password").isAlphanumeric().withMessage("teacher password must be string and number only").isLength({ min: 8, max: 20 }).withMessage("teacher password < 8 length"),
-            body("email").isEmail().withMessage("teacher email must be email").isLength({ min: 8, max: 20 }).withMessage("teacher 3 < email > 20 length"),
-            body("image").isAlphanumeric().withMessage("teacher image must be image"),
-
-        ]
-        , controller.createTeacher)
-    .put(
-        [
-            body("id").isInt().withMessage("teacher ID must be Integer"),
-            body("fullName").isAlpha().withMessage("teacher name must be string").isLength({ min: 3, max: 20 }).withMessage("teacher 3 < name > 20 length"),
-            body("password").isAlphanumeric().withMessage("teacher password must be string and number only").isLength({ min: 8, max: 20 }).withMessage("teacher name < 8 length"),
-            body("email").isEmail().withMessage("teacher email must be email").isLength({ min: 8, max: 20 }).withMessage("teacher 3 < email > 20 length"),
-            body("image").isAlphanumeric().withMessage("teacher image must be image"),
-        ]
-        , controller.updateTeacher)
+    .get([
+        param("id").isInt().withMessage("child name must be integer"),
+    ], controller.getTeacherByID)
+    .put(createValidation("teacher"), controller.updateTeacher)
     .delete(controller.deleteTeacher)
 
-
+function createValidation(_type) {
+    return [
+        param("id").isInt().withMessage(`${_type} name must be integer`),
+        // body("id").isInt().withMessage(`${_type} ID must be Integer`).isMongoId().withMessage(`${_type} ID must be object`),
+        body("fullName").isAlpha().withMessage(`${_type} name must be string`).isLength({ min: 3, max: 20 }).withMessage(`${_type} 3 < name > 20 length`),
+        body("password").isAlphanumeric().withMessage(`${_type} password must be string and number only`).isLength({ min: 8, max: 20 }).withMessage(`${_type} 8 < password > 20 length`),
+        body("email").isEmail().withMessage(`${_type} email must be email`).isLength({ min: 8, max: 20 }).withMessage(`${_type} 3 < email > 20 length`),
+        body("image").isAlphanumeric().withMessage(`${_type} image must be image`),
+    ]
+}
 
 
 
