@@ -7,6 +7,7 @@ const body_parser = require("body-parser");
 const AuthenticationRouter = require("./Routers/AuthenticationRouter");
 const teachersRouter = require("./Routers/TeachersRouts");
 const childRouter = require("./Routers/ChildRouts");
+const classRouter = require("./Routers/ClassRouter");
 
 
 // to create server
@@ -53,6 +54,7 @@ server.use(body_parser.urlencoded({ extended: false })); // extended => pure tex
 server.use(AuthenticationRouter);
 server.use(teachersRouter);
 server.use(childRouter);
+server.use(classRouter);
 
 // 3- not found 
 server.use((request, response) => {
