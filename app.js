@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const body_parser = require("body-parser");
 
 // internal
+const AuthenticationRouter = require("./Routers/AuthenticationRouter");
 const teachersRouter = require("./Routers/TeachersRouts");
 
 
@@ -48,6 +49,7 @@ server.use((request, response, next) => {
 // Router and End Points
 server.use(body_parser.json()); // next in that is dependant
 server.use(body_parser.urlencoded({ extended: false })); // extended => pure text and number  
+server.use(AuthenticationRouter);
 server.use(teachersRouter);
 
 // 3- not found 

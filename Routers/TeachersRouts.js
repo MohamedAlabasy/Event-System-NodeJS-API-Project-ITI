@@ -7,9 +7,11 @@ const router = express.Router();
 const controller = require("./../Controllers/TeachersController");
 
 
+//ask eng.eman about that .. ?
+router.get("/teachers", controller.getAllTeacher)
 
-router.route("/teachers")
-    .get(controller.getAllTeacher)
+router.route("/teachers/:id")
+    .get(controller.getTeacherByID)
     .post(
         [
             // _id(objectID), fullname, password, email, image(which is string)
@@ -31,8 +33,9 @@ router.route("/teachers")
             body("image").isAlphanumeric().withMessage("teacher image must be image"),
         ]
         , controller.updateTeacher)
-
     .delete(controller.deleteTeacher)
+
+
 
 
 
