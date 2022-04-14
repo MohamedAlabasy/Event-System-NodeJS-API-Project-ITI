@@ -6,6 +6,7 @@ const body_parser = require("body-parser");
 // internal
 const AuthenticationRouter = require("./Routers/AuthenticationRouter");
 const teachersRouter = require("./Routers/TeachersRouts");
+const childRouter = require("./Routers/ChildRouts");
 
 
 // to create server
@@ -51,6 +52,7 @@ server.use(body_parser.json()); // next in that is dependant
 server.use(body_parser.urlencoded({ extended: false })); // extended => pure text and number  
 server.use(AuthenticationRouter);
 server.use(teachersRouter);
+server.use(childRouter);
 
 // 3- not found 
 server.use((request, response) => {

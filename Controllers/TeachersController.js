@@ -5,20 +5,18 @@ const { validationResult } = require("express-validator");
 
 
 //  to get all teachers
-module.exports.getAllTeacher = (request, response, next) => {
-    // console.log(request.query);
-    // console.log(request.params);
+module.exports.getAllTeacher = (request, response) => {
     response.status(200).json({ message: "list of All Teacher" });
 }
 
 // to show specific  Teacher
-module.exports.getTeacherByID = (request, response,) => {
-    response.status(200).json({ message: "get Specific Teacher by ", data: request.params });
+module.exports.getTeacherByID = (request, response) => {
+    response.status(200).json({ message: "get Specific Teacher by id", data: request.params });
 }
 
 
 // to create new Teacher
-module.exports.createTeacher = (request, response, next) => {
+module.exports.createTeacher = (request, response) => {
     let result = validationResult(request);
     if (!result.isEmpty()) {
         let errorMessages = result.array().reduce((sum, error) => sum + error.msg + " ", "")
@@ -28,16 +26,16 @@ module.exports.createTeacher = (request, response, next) => {
 }
 
 // to update new Teacher
-module.exports.updateTeacher = (request, response, next) => {
+module.exports.updateTeacher = (request, response) => {
     let result = validationResult(request);
     if (!result.isEmpty()) {
         let errorMessages = result.array().reduce((sum, error) => sum + error.msg + " ", "")
         throw new Error(errorMessages);
     }
-    response.status(201).json({ message: "update new teacher successfully ", body: request.body })
+    response.status(201).json({ message: "update teacher successfully ", body: request.body })
 }
 
 // to delete teacher
-module.exports.deleteTeacher = (request, response, next) => {
+module.exports.deleteTeacher = (request, response) => {
     response.status(200).json({ message: "delete teacher successfully" })
 }
